@@ -1,0 +1,29 @@
+<p>Create post</p>
+
+<form [formGroup]="form">
+  <div>
+    <label for="title">Title</label>
+    <input formControlName="title" type="text" id="title" />
+  </div>
+
+  <div>
+    <label for="author">Author</label>
+    <input [formControl]="form.controls.author" type="text" id="author" />
+  </div>
+
+  <div>
+    <label for="content">Content</label>
+    <input [formControl]="form.controls.content" type="text" id="content" />
+  </div>
+
+  <div>
+    <label for="date">Date</label>
+    <input formControlName="date" type="date" id="date" />
+  </div>
+
+  <button type="submit">Submit</button>
+  <button type="reset">Reset</button>
+</form>
+
+<input [formControl]="searchControl" type="text" />
+<input [ngModel]="value" (ngModelChange)="onChange($event)" type="text" />

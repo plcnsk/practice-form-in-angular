@@ -1,0 +1,40 @@
+<form class="form" (ngSubmit)="onSubmit()" [formGroup]="form">
+  <h1>Registration</h1>
+
+  <label for="email">Email</label>
+  <input
+    [ngClass]="{
+      invalid:
+        form.controls[registrationKey.Email].invalid &&
+        form.controls[registrationKey.Email].touched,
+      valid:
+        form.controls[registrationKey.Email].valid &&
+        form.controls[registrationKey.Email].touched
+    }"
+    [formControlName]="registrationKey.Email"
+    type="text"
+    id="email"
+  />
+
+  <label for="password">Password</label>
+  <input
+    type="text"
+    [ngClass]="{
+      invalid:
+        form.controls[registrationKey.Password].invalid &&
+        form.controls[registrationKey.Password].touched,
+      valid:
+        form.controls[registrationKey.Password].valid &&
+        form.controls[registrationKey.Password].touched
+    }"
+    [formControlName]="registrationKey.Password"
+    id="password"
+  />
+
+  <span *ngIf="errorMessage$ | async as error" class="error-message">{{
+    error
+  }}</span>
+
+  <button [disabled]="form.disabled" type="submit">Sign Up</button>
+  <a [routerLink]="['/login']" class="no-border"> Login </a>
+</form>
