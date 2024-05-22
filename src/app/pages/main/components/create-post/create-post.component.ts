@@ -5,7 +5,12 @@ import {
   OnInit,
 } from '@angular/core';
 import { CreatePostStore } from './store/create-post.store';
-import {FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -25,16 +30,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class CreatePostComponent implements OnInit {
   readonly form = this.formBuilder.nonNullable.group(
     {
-      title: ['', [Validators.required], []],
-      author: ['', [Validators.required], []],
-      content: ['', [Validators.required], []],
+      title: ['', [Validators.required, Validators.minLength(12)], []],
+      author: ['', [Validators.required, Validators.minLength(5)], []],
+      content: ['', [Validators.required, Validators.minLength(5)], []],
       date: ['', [Validators.required], []],
     },
     { validators: [Validators.required], asyncValidators: [] },
   );
 
   // readonly searchControl = new FormControl<string>('', { nonNullable: true }); // 1
-  readonly searchControl = this.formBuilder.nonNullable.control(''); // 2
+  // readonly searchControl = this.formBuilder.nonNullable.control(''); // 2
 
   value = ''; // 3
 
@@ -47,31 +52,8 @@ export class CreatePostComponent implements OnInit {
   ngOnInit(): void {
     // this.initForm();
     this.initForm2();
-    this.form.controls.title.disable();
-    console.log(this.form.value, this.form.getRawValue());
-
-    if (this.form.enabled) {
-      console.log('valid', this.form.value);
-    }
-    if (this.form.controls.title.valid) {
-      console.log('valid', this.form.value);
-    }
-    if (this.form.controls.title.invalid) {
-      console.log('invalid', this.form.value);
-    }
-    if (this.form.controls.title.disabled) {
-      console.log('disabled', this.form.value);
-    }
-
-    this.form.statusChanges.subscribe(status => {
-      console.log('statusChanges.', status);
-    });
 
     //value - не покажет задиз контролы, а getRawValue() покажет
-  }
-
-  onChange(event: any): void {
-    console.log('onChange', event);
   }
 
   private initForm(): void {
@@ -132,7 +114,6 @@ export class CreatePostComponent implements OnInit {
     this.componentPostStore.state2$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(({ title, content, author, date }) => {
-        console.log({ title, content, author, date });
         this.form.patchValue(
           { title, content, author, date },
           { emitEvent: false, onlySelf: true },

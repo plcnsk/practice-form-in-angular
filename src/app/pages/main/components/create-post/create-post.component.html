@@ -1,29 +1,31 @@
-<p>Create post</p>
+<form class="form" [formGroup]="form">
+  <h3>Creat post</h3>
 
-<form [formGroup]="form">
-  <div>
-    <label for="title">Title</label>
+  <div class="control">
+    <label for="title">Title:</label>
     <input formControlName="title" type="text" id="title" />
   </div>
 
-  <div>
-    <label for="author">Author</label>
+  <div class="control">
+    <label for="author">Author:</label>
     <input [formControl]="form.controls.author" type="text" id="author" />
   </div>
 
-  <div>
-    <label for="content">Content</label>
+  <div class="control">
+    <label for="content">Content:</label>
     <input [formControl]="form.controls.content" type="text" id="content" />
   </div>
 
-  <div>
-    <label for="date">Date</label>
+  <div class="control">
+    <label for="date">Date:</label>
     <input formControlName="date" type="date" id="date" />
   </div>
 
-  <button type="submit">Submit</button>
-  <button type="reset">Reset</button>
+  <div class="buttons">
+    <button [disabled]="form.disabled" type="submit">Submit</button>
+    <button type="reset">Reset</button>
+  </div>
 </form>
 
-<input [formControl]="searchControl" type="text" />
-<input [ngModel]="value" (ngModelChange)="onChange($event)" type="text" />
+<!--<input [formControl]="searchControl" type="text" />-->
+<!--<input [ngModel]="value" (ngModelChange)="onChange($event)" type="text" />-->
